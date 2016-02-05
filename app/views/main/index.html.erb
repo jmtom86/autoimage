@@ -1,0 +1,170 @@
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="#">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+
+<div id="page-content-wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+      <h2>Welcome, <%=@user.name%>!</h2>
+
+  </div>
+  <div class="row">
+      <a href="/customers/new">Add Customer</a>
+      <a href="/roll/new">Add Roll</a>
+  </div>
+  <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Newest Customers 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-3">First Name</th>
+              <th class="col-xs-3">Last Name</th>
+              <th class="col-xs-3">Phone Number</th>
+              <th class="col-xs-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |c| %>
+            <tr>
+              <td class="col-xs-3"><%=c.first_name%></td>
+              <td class="col-xs-3"><%=c.last_name%></td>
+              <td class="col-xs-3"><%=c.phone%></td>
+              <td class="col-xs-3">
+                <a href="/customers/<%=c.id%>">View</a>
+                <a href="/customers/<%=c.id%>/edit">Edit</a>
+                <a href="/jobs/new/<%=c.id%>">Add Job</a>
+                <form method="post" action="/customers/<%=c.id%>">
+                  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="submit" value="Delete">
+                </form>
+              </td>
+            </tr>
+            <% end %>
+            
+          </tbody>
+        </table>
+        <div class="panel-footer clearfix">
+          <div class="tablelinks">
+            <a href="/customers/index">View All Customers</a>
+          </div>
+          
+        </div>
+      </div>
+        </div>
+  <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Latest Rolls 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-4">Name</th>
+              <th class="col-xs-4">Date Bought</th>
+              <th class="col-xs-4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rolls.each do |r| %>
+            <tr>
+              <td class="col-xs-4"><%=r.name%></td>
+              <td class="col-xs-4"><%=r.date_bought%></td>
+              <td class="col-xs-4">
+                <a href="/rolls/<%=r.id%>">View</a>
+                <a href="">Edit</a>
+                <form method="post" action="/rolls/<%=r.id%>">
+                  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="submit" value="Delete">
+                </form>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="panel-footer clearfix">
+          <div class="tablelinks">
+            <a href="">View All Rolls</a>
+          </div>
+          
+        </div>
+      </div>
+  </div>
+  <div id="graph" style="width:100%; height:600px;"></div>
+    </div>
+</div>
+
+<div class="container">
+	
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $(function () { 
+        var tintNames = new Array();
+        var tintCounts = new Array();
+        <% @tintCounts.each do |t| %>
+        tintNames.push('<%=t.name%>')
+        tintCounts.push(<%=t.c%>)
+        <% end %>
+        // console.log(tintNames)
+        // console.log(tintCounts)
+    $('#graph').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Popular Tint'
+        },
+        xAxis: {
+            categories: tintNames
+        },
+        yAxis: {
+            title: {
+                text: 'Tints Used'
+            }
+        },
+        series: [{
+            name: 'Number of times tint was used',
+            data: tintCounts
+        }]
+    });
+});
+  })
+</script>
+

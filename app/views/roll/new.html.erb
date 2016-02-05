@@ -1,0 +1,69 @@
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="#">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+<div id="page-content-wrapper">
+	<div class="container-fluid">
+  		<div class="row">
+		<h2>Add roll!!!</h2>
+		<form class="form-horizontal" role="form" method="post" action="/rolls">
+			<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		    <div class="form-group">
+		      <label class="control-label col-sm-2" for="first">Name:</label>
+		      <div class="col-sm-4">
+		        <input type="text" class="form-control" id="first" name="name">
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label class="control-label col-sm-2" for="last">Cost:</label>
+		      <div class="col-sm-4">
+		        <input type="text" class="form-control" id="last" name="cost">
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label class="control-label col-sm-2" for="email">Date:</label>
+		      <div class="col-sm-4">
+		        <input type="text"  class="form-control" name="date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true" placeholder="dd-mm-yyyy">
+		      </div>
+		    </div>
+		    <!-- <div class="form-group">
+		      <label class="control-label col-sm-2" for="pwd">Password:</label>
+		      <div class="col-sm-4">          
+		        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+		      </div>
+		    </div> -->
+		    <div class="form-group">        
+		      <div class="col-sm-offset-2 col-sm-10">
+		        <button type="submit" class="btn btn-default">Add</button>
+		      </div>
+		    </div>
+		  </form>
+	</div>
+        </div>
+  </div>

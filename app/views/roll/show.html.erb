@@ -1,0 +1,74 @@
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="#">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+      <div class="row">
+    <h2>Roll!!!</h2>
+    <p>Name: <%=@tint.name%></p>
+    <p>Cost: $<%=@tint.cost%></p>
+  </div>
+  <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Jobs done with roll 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-3">Make</th>
+              <th class="col-xs-3">Model</th>
+              <th class="col-xs-3">Date</th>
+              <th class="col-xs-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @jobs.count != 0 %>
+            <% @jobs.each do |j| %>
+            <tr>
+              <td class="col-xs-3"><%=j.make%></td>
+              <td class="col-xs-3"><%=j.model%></td>
+              <td class="col-xs-3"><%=j.date%></td>
+              <td class="col-xs-3"><a href="/jobs/<%=j.id%>">View</a></td>
+            </tr>
+            <% end %>
+            <%  else %>
+                <tr>
+                  <td>No Jobs</td>
+                </tr>
+            <%    end%>
+          </tbody>
+        </table>
+      </div>
+  </div>
+        </div>
+  </div>

@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row">
+		<h2>Job!!!</h2>
+		<p>Customer: <a href="/customers/<%=@job.customer.id%>"><%=@job.customer.first_name%> <%=@job.customer.last_name%></a></p>
+    <p>Make: <%=@job.make%></p>
+    <p>Model: <%=@job.model%></p>
+		<p>Year: <%=@job.year%></p>
+    <p>Total: $<%=@job.total%></p>
+	</div>
+  <div class="row">
+    <h4>Tints Used</h4>
+    <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-3">Tint</th>
+              <th class="col-xs-3">Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @job.tintjobs.each do |t| %>
+            <tr>
+              <td class="col-xs-3"><a href="/rolls/<%=t.tint.id%>"><%=t.tint.name%></a>
+                </td>
+              <td class="col-xs-3">$<%=t.cost%></td>
+            </tr>
+            <% end %>
+          </tbody>
+    </table>
+  </div>
+	
+</div>

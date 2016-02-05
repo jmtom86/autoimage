@@ -1,0 +1,87 @@
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="#">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+<div id="page-content-wrapper">
+	<div class="container-fluid">
+  <div class="row">
+      <a href="/customers/new">Add Customer</a>
+  </div>
+  <!-- <div class="row"> -->
+  	<%# form_tag(customers_path, :method=> "get", id: "search-form") do %>
+  	<%# text_field_tag :search, params[:search], placeholder: "Search Customers" %>
+  	<%# submit_tag "Search" %>
+  	<%# end %>
+  <!-- </div> -->
+  <!-- <div class="row"> -->
+  	<%# if @customers.present? %>
+  	<%#= render @customers %>
+  	<%# else %>
+  	<!-- <p>No customers containing the terms</p> -->
+  	<%# end %>
+  <!-- </div> -->
+  <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Customers 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-3">First Name</th>
+              <th class="col-xs-3">Last Name</th>
+              <th class="col-xs-3">Phone Number</th>
+              <th class="col-xs-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |c| %>
+            <tr>
+              <td class="col-xs-3"><%=c.first_name%></td>
+              <td class="col-xs-3"><%=c.last_name%></td>
+              <td class="col-xs-3"><%=c.phone%></td>
+              <td class="col-xs-3">
+                <a href="/customers/<%=c.id%>">View</a>
+                <a href="/customers/<%=c.id%>/edit">Edit</a>
+                <form method="post" action="/customers/<%=c.id%>">
+                  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="submit" value="Delete">
+                </form>
+              </td>
+            </tr>
+            <% end %>
+            
+          </tbody>
+        </table>
+      </div>
+        </div>
+  </div>
