@@ -58,8 +58,8 @@
 		      <label class="control-label col-sm-2" for="year">Year:</label>
 		      <div class="col-sm-4">
 		        <select class="form-control" name="year">
-		      		<option>2016</option>
-		      		<option selected>2015</option>
+		      		<option selected>2016</option>
+		      		<option>2015</option>
 		      		<option>2014</option>
 		      		<option>2013</option>
 		      		<option>2012</option>
@@ -102,7 +102,7 @@
 		    			<select class="form-control" name="tint1">
 		    				<option disabled selected>Select one</option>
 		    				<% @tints.each do |t| %>
-		    				<option value="<%=t.id%>"><%=t.name%></option>
+		    				<option value="<%=t.id%>"><%=t.name%> - <%=t.length%></option>
 		    			<!-- 	<option>CS20</option>
 		    				<option>CS50</option>
 		    				<option>CS5</option> -->
@@ -138,7 +138,7 @@
 		$('#addtintroll').click(function(){
 			console.log("Clicked")
 			if(count < 6){
-				$('#tints').append("<div class='col-sm-6 rolls'><select class='form-control' name='tint"+count.toString()+"'><option disabled selected>Select one</option><% @tints.each do |t| %><option value='<%=t.id%>'><%=t.name%></option><% end %></select></div><div class='col-sm-6 rollscost'><input type='text' class='form-control' name='tint"+count.toString()+"cost'placeholder='input cost'></div>")
+				$('#tints').append("<div class='col-sm-6 rolls'><select class='form-control' name='tint"+count.toString()+"'><option disabled selected>Select one</option><% @tints.each do |t| %><option value='<%=t.id%>'><%=t.name%> - <%=t.length%></option><% end %></select></div><div class='col-sm-6 rollscost'><input type='text' class='form-control' name='tint"+count.toString()+"cost'placeholder='input cost'></div>")
 				count++;
 			}
 			

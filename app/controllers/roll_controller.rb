@@ -9,7 +9,16 @@ class RollController < ApplicationController
   def create
   	puts "PARSING DATE"
   	puts Date.strptime(params[:date], '%m/%d/%Y')
-  	Tint.create(name: params[:name], date_bought: Date.strptime(params[:date], '%m/%d/%Y'), cost: params[:cost], done: false)
+    roll_length = ""
+    if params[:length] == "20 inch" 
+      roll_length = "20in."
+    elsif params[:length] == "36 inch"
+      roll_length = "36in."
+    else
+      roll_length = "40in."
+    end
+    puts roll_length
+  	Tint.create(name: params[:name], date_bought: Date.strptime(params[:date], '%m/%d/%Y'), cost: params[:cost], done: false, roll_number: params[:rollnum], length: roll_length)
   	redirect_to "/main"
   end
 

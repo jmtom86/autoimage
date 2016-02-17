@@ -5,11 +5,13 @@ class MainController < ApplicationController
   	# @rolls = Tint.order(:name)
     @rolls = Tint.find_by_sql("SELECT * from tints ORDER BY tints.created_at DESC LIMIT 5")
   	# @tintCounts = Tintjob.find_by_sql("SELECT tints.name, COUNT(tints.name) as c FROM tintjobs left join tints on tintjobs.tint_id = tints.id GROUP BY tints.name")
-    # puts "!!!!!! MONTH !!!!!"
-    # puts Time.now.month
+    puts "!!!!!! MONTH !!!!!" + Time.now.month.to_s + "YASDASD"
+    puts Time.now.month
 
-    @tintCounts = Tint.find_by_sql("SELECT tints.name, COUNT(tintjobs.tint_id) as c FROM tints left join tintjobs on tints.id = tintjobs.tint_id GROUP BY tints.id ORDER BY c DESC")
-  	# puts "--- ROLLLS ---"
+    # @tintCounts = Tint.find_by_sql("SELECT tints.name, COUNT(tintjobs.tint_id) as c FROM tints left join tintjobs on tints.id = tintjobs.tint_id GROUP BY tints.id ORDER BY c DESC")
+    @tintCounts = Tintjob.find_by_sql("SELECT tint_name, COUNT(tintjobs.tint_name) as c FROM tintjobs WHERE tintjobs.tint_name != '' AND EXTRACT(MONTH FROM tintjobs.created_at) = "+Time.now.month.to_s+" GROUP BY tintjobs.tint_name ORDER BY c DESC")
+  	@tintCountsbyYear = Tintjob.find_by_sql("SELECT tint_name, COUNT(tintjobs.tint_name) as c FROM tintjobs WHERE tintjobs.tint_name != '' AND EXTRACT(YEAR FROM tintjobs.created_at) = "+Time.now.year.to_s+" GROUP BY tintjobs.tint_name ORDER BY c DESC")
+    # puts "--- ROLLLS ---"
   	# puts @tintCounts
 
   	@chart = LazyHighCharts::HighChart.new('pie') do |f|

@@ -15,7 +15,7 @@
                     <a href="/roll/index">Rolls</a>
                 </li>
                 <li>
-                    <a href="#">Jobs</a>
+                    <a href="/jobs/index">Jobs</a>
                 </li>
                 <li>
                     <% if current_user %>
@@ -36,9 +36,9 @@
       <h2>Welcome, <%=@user.name%>!</h2>
 
   </div>
-  <div class="row">
-      <a href="/customers/new">Add Customer</a>
-      <a href="/roll/new">Add Roll</a>
+  <div class="row links">
+      <a class="pull-right" id="addcust" href="/customers/new">Add Customer</a>
+      <a class="pull-right" href="/roll/new">Add Roll</a>
   </div>
   <div class="row">
       <div class="panel panel-primary">
@@ -103,7 +103,7 @@
           <tbody>
             <% @rolls.each do |r| %>
             <tr>
-              <td class="col-xs-4"><%=r.name%></td>
+              <td class="col-xs-4"><%=r.name%> - <%=r.length%></td>
               <td class="col-xs-4"><%=r.date_bought%></td>
               <td class="col-xs-4">
                 <a href="/rolls/<%=r.id%>">View</a>
@@ -126,8 +126,11 @@
         </div>
       </div>
   </div>
+  <div class="row">
+    <p class="pull-right" id="byyear">By Year</p>
+    <p class="pull-right" id="bymonth">By Month</p>
+  </div>
   <div id="graph" style="width:100%; height:600px;"></div>
-    </div>
 </div>
 
 <div class="container">
@@ -136,20 +139,24 @@
 <script type="text/javascript">
   $(document).ready(function(){
       $(function () { 
+        $('#bymonth').hide();
         var tintNames = new Array();
         var tintCounts = new Array();
         <% @tintCounts.each do |t| %>
-        tintNames.push('<%=t.name%>')
+        tintNames.push('<%=t.tint_name%>')
         tintCounts.push(<%=t.c%>)
         <% end %>
         // console.log(tintNames)
         // console.log(tintCounts)
     $('#graph').highcharts({
+        credits: {
+            enabled: false
+        },
         chart: {
             type: 'bar'
         },
         title: {
-            text: 'Popular Tint'
+            text: 'Popular Tints this Month'
         },
         xAxis: {
             categories: tintNames
@@ -164,7 +171,74 @@
             data: tintCounts
         }]
     });
-});
+    });
+      $('#byyear').click(function(){
+        var tintNames = new Array();
+        var tintCounts = new Array();
+        <% @tintCountsbyYear.each do |t| %>
+        tintNames.push('<%=t.tint_name%>')
+        tintCounts.push(<%=t.c%>)
+        <% end %>
+        $('#graph').highcharts({
+        credits: {
+            enabled: false
+        },
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Popular Tints this Year'
+        },
+        xAxis: {
+            categories: tintNames
+        },
+        yAxis: {
+            title: {
+                text: 'Tints Used'
+            }
+        },
+        series: [{
+            name: 'Number of times tint was used',
+            data: tintCounts
+        }]
+    });
+        $('#byyear').hide();
+        $('#bymonth').show();
+      })
+
+      $('#bymonth').click(function(){
+        var tintNames = new Array();
+        var tintCounts = new Array();
+        <% @tintCounts.each do |t| %>
+        tintNames.push('<%=t.tint_name%>')
+        tintCounts.push(<%=t.c%>)
+        <% end %>
+        $('#graph').highcharts({
+        credits: {
+            enabled: false
+        },
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Popular Tints this Month'
+        },
+        xAxis: {
+            categories: tintNames
+        },
+        yAxis: {
+            title: {
+                text: 'Tints Used'
+            }
+        },
+        series: [{
+            name: 'Number of times tint was used',
+            data: tintCounts
+        }]
+    });
+        $('#bymonth').hide();
+        $('#byyear').show();
+      })
   })
 </script>
 

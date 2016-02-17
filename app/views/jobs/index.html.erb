@@ -1,2 +1,71 @@
-<h1>Jobs#index</h1>
-<p>Find me in app/views/jobs/index.html.erb</p>
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="/jobs/index">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+<div id="page-content-wrapper">
+
+    <div class="container-fluid">
+  <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Jobs 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">Make</th>
+              <th class="col-xs-2">Model</th>
+              <th class="col-xs-2">Year</th>
+              <th class="col-xs-2">Total</th>
+              <th class="col-xs-2">Date</th>
+              <th class="col-xs-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @jobs.each do |j| %>
+            <tr>
+              <td class="col-xs-2"><%=j.make%></td>
+              <td class="col-xs-2"><%=j.model%></td>
+              <td class="col-xs-2"><%=j.year%></td>
+              <td class="col-xs-2"><%=j.total%></td>
+              <td class="col-xs-2"><%=j.date.strftime("%D")%></td>
+              <td class="col-xs-2">
+           
+              </td>
+            </tr>
+            <% end %>
+            
+          </tbody>
+        </table>
+      </div>
+        </div>
+    </div>
+</div>

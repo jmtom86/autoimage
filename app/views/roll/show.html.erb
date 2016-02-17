@@ -32,8 +32,19 @@
   <div class="container-fluid">
       <div class="row">
     <h2>Roll!!!</h2>
+    <% if @tint.done == false %>
+    <form class="pull-right" action="/rolls/<%=@tint.id%>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type="submit" value="Roll Done">
+    </form>
+    <% end %>
+  </div>
+  <div class="row">
     <p>Name: <%=@tint.name%></p>
     <p>Cost: $<%=@tint.cost%></p>
+    <p>Length: <%=@tint.length%></p>
+    <p>Roll Number: <%=@tint.roll_number%></p>
   </div>
   <div class="row">
       <div class="panel panel-primary">
