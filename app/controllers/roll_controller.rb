@@ -1,6 +1,7 @@
 class RollController < ApplicationController
   def index
-    @rolls = Tint.find_by_sql("SELECT * from tints ORDER BY tints.created_at DESC")
+    @rolls = Tint.find_by_sql("SELECT * from tints WHERE tints.done = false ORDER BY tints.created_at DESC")
+    @allRolls = Tint.find_by_sql("SELECT * from tints ORDER BY tints.created_at DESC")
   end
 
   def new

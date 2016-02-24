@@ -31,7 +31,9 @@
 <div id="page-content-wrapper">
 	<div class="container-fluid">
   <div class="row">
-      <a href="/roll/new">Add Roll</a>
+      <a class="col-xs-1" href="/roll/new">Add Roll</a>
+      <p id="allclick" class="col-xs-2">All Rolls</p>
+      <p id="currclick" style="display: none;" class="col-xs-2">Current Rolls</p>
   </div>
   <!-- <div class="row"> -->
   	<%# form_tag(customers_path, :method=> "get", id: "search-form") do %>
@@ -46,7 +48,7 @@
   	<!-- <p>No customers containing the terms</p> -->
   	<%# end %>
   <!-- </div> -->
-  <div class="row">
+  <div id="rolls" class="row">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h4>
@@ -84,4 +86,60 @@
         </table>
       </div>
         </div>
+  <div id="allrolls" style="display: none;" class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Rolls 
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-3">Name</th>
+              <th class="col-xs-3">Length</th>
+              <th class="col-xs-3">Date Bought</th>
+              <th class="col-xs-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @allRolls.each do |r| %>
+            <tr>
+              <td class="col-xs-3"><%=r.name%></td>
+              <td class="col-xs-3"><%=r.length%></td>
+              <td class="col-xs-3"><%=r.date_bought.strftime('%D')%></td>
+              <td class="col-xs-3">
+                <a href="/rolls/<%=r.id%>">View</a>
+                <a href="">Edit</a>
+                <form method="post" action="/rolls/<%=r.id%>">
+                  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="submit" value="Delete">
+                </form>
+              </td>
+            </tr>
+            <% end %>
+            
+          </tbody>
+        </table>
+      </div>
+        </div>
   </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // $('#allrolls').hide();
+    // $('#currclick').hide();
+    $('#allclick').click(function(){
+      $('#allrolls').show();
+      $('#currclick').show();
+      $('#allclick').hide();
+      $('#rolls').hide();
+    })
+    $('#currclick').click(function(){
+      $('#rolls').show();
+      $('#allclick').show();
+      $('#currclick').hide();
+      $('#allrolls').hide();
+    })
+  })
+</script>
