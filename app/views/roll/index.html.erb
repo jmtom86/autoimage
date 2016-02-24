@@ -56,17 +56,19 @@
         <table class="table table-fixed">
           <thead>
             <tr>
-              <th class="col-xs-4">Name</th>
-              <th class="col-xs-4">Date Bought</th>
-              <th class="col-xs-4"></th>
+              <th class="col-xs-3">Name</th>
+              <th class="col-xs-3">Length</th>
+              <th class="col-xs-3">Date Bought</th>
+              <th class="col-xs-3"></th>
             </tr>
           </thead>
           <tbody>
             <% @rolls.each do |r| %>
             <tr>
-              <td class="col-xs-4"><%=r.name%></td>
-              <td class="col-xs-4"><%=r.date_bought%></td>
-              <td class="col-xs-4">
+              <td class="col-xs-3"><%=r.name%></td>
+              <td class="col-xs-3"><%=r.length%></td>
+              <td class="col-xs-3"><%=r.date_bought.strftime('%D')%></td>
+              <td class="col-xs-3">
                 <a href="/rolls/<%=r.id%>">View</a>
                 <a href="">Edit</a>
                 <form method="post" action="/rolls/<%=r.id%>">

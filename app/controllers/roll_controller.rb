@@ -33,6 +33,11 @@ class RollController < ApplicationController
     tint = Tint.find(params[:id])
     puts "ROLL ID"
     puts @tint.id
-    @jobs = Tintjob.find_by_sql(["SELECT jobs.id, jobs.make, jobs.model, jobs.date FROM tintjobs LEFT JOIN jobs on tintjobs.job_id = jobs.id WHERE tintjobs.tint_id = ?", tint.id])
+    @jobs = Tintjob.find_by_sql(["SELECT jobs.id, jobs.make, jobs.model, jobs.date, tintjobs.cost FROM tintjobs LEFT JOIN jobs on tintjobs.job_id = jobs.id WHERE tintjobs.tint_id = ?", tint.id])
+  end
+
+  def update
+    tint = Tint.find(params[:id])
+    tint.update(done: true)
   end
 end

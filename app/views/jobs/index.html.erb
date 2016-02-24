@@ -55,10 +55,10 @@
               <td class="col-xs-2"><%=j.make%></td>
               <td class="col-xs-2"><%=j.model%></td>
               <td class="col-xs-2"><%=j.year%></td>
-              <td class="col-xs-2"><%=j.total%></td>
+              <td class="col-xs-2"><%=number_to_currency(j.total)%></td>
               <td class="col-xs-2"><%=j.date.strftime("%D")%></td>
               <td class="col-xs-2">
-           
+           			<a href="/jobs/<%=j.id%>">View</a>
               </td>
             </tr>
             <% end %>

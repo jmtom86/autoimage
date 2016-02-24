@@ -1,31 +1,72 @@
-<div class="container">
-	<div class="row">
-		<h2>Job!!!</h2>
-		<p>Customer: <a href="/customers/<%=@job.customer.id%>"><%=@job.customer.first_name%> <%=@job.customer.last_name%></a></p>
-    <p>Make: <%=@job.make%></p>
-    <p>Model: <%=@job.model%></p>
-		<p>Year: <%=@job.year%></p>
-    <p>Total: $<%=@job.total%></p>
-	</div>
-  <div class="row">
-    <h4>Tints Used</h4>
-    <table class="table table-fixed">
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/main">
+                        Auto Image
+                    </a>
+                </li>
+                <li>
+                    <a href="/customers/index">Customers</a>
+                </li>
+                <li>
+                    <a href="/roll/index">Rolls</a>
+                </li>
+                <li>
+                    <a href="/jobs/index">Jobs</a>
+                </li>
+                <li>
+                    <% if current_user %>
+    <form action='/sessions' method='post'>
+      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log Out'>
+    </form>
+  <% end %>
+                </li>
+            </ul>
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+    	<div class="row">
+    		<h2>Job!!!</h2>
+    		<p>Customer: <a href="/customers/<%=@job.customer.id%>"><%=@job.customer.first_name%> <%=@job.customer.last_name%></a></p>
+        <p>Make: <%=@job.make%></p>
+        <p>Model: <%=@job.model%></p>
+    		<p>Year: <%=@job.year%></p>
+        <p>Total: <%=number_to_currency(@job.total)%></p>
+    	</div>
+      <div class="row">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>
+            Tints Used
+          </h4>
+        </div>
+        <table class="table table-fixed">
           <thead>
             <tr>
               <th class="col-xs-3">Tint</th>
-              <th class="col-xs-3">Revenue</th>
+                  <th class="col-xs-3">Roll Number</th>
+                  <th class="col-xs-3">Revenue</th>
             </tr>
           </thead>
           <tbody>
             <% @job.tintjobs.each do |t| %>
-            <tr>
-              <td class="col-xs-3"><a href="/rolls/<%=t.tint.id%>"><%=t.tint.name%></a>
-                </td>
-              <td class="col-xs-3">$<%=t.cost%></td>
-            </tr>
-            <% end %>
+                <tr>
+                  <td class="col-xs-3"><a href="/rolls/<%=t.tint.id%>"><%=t.tint.name%></a>
+                    </td>
+                    <td class="col-xs-3"><%=t.id%></td>
+                  <td class="col-xs-3"><%=number_to_currency(t.cost)%></td>
+                </tr>
+                <% end %>
           </tbody>
-    </table>
+        </table>
+
+      </div>
+      </div>
+    	
+    </div>
   </div>
-	
-</div>

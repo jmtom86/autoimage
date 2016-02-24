@@ -15,7 +15,7 @@
                     <a href="/roll/index">Rolls</a>
                 </li>
                 <li>
-                    <a href="#">Jobs</a>
+                    <a href="/jobs/index">Jobs</a>
                 </li>
                 <li>
                     <% if current_user %>
@@ -42,7 +42,7 @@
   </div>
   <div class="row">
     <p>Name: <%=@tint.name%></p>
-    <p>Cost: $<%=@tint.cost%></p>
+    <p>Cost: <%=number_to_currency(@tint.cost)%></p>
     <p>Length: <%=@tint.length%></p>
     <p>Roll Number: <%=@tint.roll_number%></p>
   </div>
@@ -56,20 +56,24 @@
         <table class="table table-fixed">
           <thead>
             <tr>
-              <th class="col-xs-3">Make</th>
-              <th class="col-xs-3">Model</th>
-              <th class="col-xs-3">Date</th>
-              <th class="col-xs-3"></th>
+              <th class="col-xs-2">Make</th>
+              <th class="col-xs-2">Model</th>
+              <th class="col-xs-2">Date</th>
+              <th class="col-xs-2">Revenue</th>
+              <th class="col-xs-2"></th>
             </tr>
           </thead>
           <tbody>
+            <% total = 0 %>
             <% if @jobs.count != 0 %>
             <% @jobs.each do |j| %>
+            <% total += j.cost %>
             <tr>
-              <td class="col-xs-3"><%=j.make%></td>
-              <td class="col-xs-3"><%=j.model%></td>
-              <td class="col-xs-3"><%=j.date%></td>
-              <td class="col-xs-3"><a href="/jobs/<%=j.id%>">View</a></td>
+              <td class="col-xs-2"><%=j.make%></td>
+              <td class="col-xs-2"><%=j.model%></td>
+              <td class="col-xs-2"><%=j.date.strftime('%D')%></td>
+              <td class="col-xs-2"><%=number_to_currency(j.cost)%></td>
+              <td class="col-xs-2"><a href="/jobs/<%=j.id%>">View</a></td>
             </tr>
             <% end %>
             <%  else %>
@@ -79,6 +83,10 @@
             <%    end%>
           </tbody>
         </table>
+        <div class="panel-footer clearfix">
+          <p class="col-xs-2 col-xs-offset-7">Total: <%=number_to_currency(total)%></p>
+          
+        </div>
       </div>
   </div>
         </div>

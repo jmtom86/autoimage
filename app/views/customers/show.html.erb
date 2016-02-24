@@ -15,7 +15,7 @@
                     <a href="/roll/index">Rolls</a>
                 </li>
                 <li>
-                    <a href="#">Jobs</a>
+                    <a href="/jobs/index">Jobs</a>
                 </li>
                 <li>
                     <% if current_user %>
@@ -62,7 +62,7 @@
               <td class="col-xs-2"><%=j.model%></td>
               <td class="col-xs-2"><%=j.year%></td>
               <td class="col-xs-2"><%=j.total%></td>
-              <td class="col-xs-2"><%=j.date%></td>
+              <td class="col-xs-2"><%=j.date.strftime('%D')%></td>
             </tr>
     <% end %>
           </tbody>
