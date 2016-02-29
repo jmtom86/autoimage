@@ -33,6 +33,7 @@
     	<div class="row">
     		<h2>Job!!!</h2>
     		<p>Customer: <a href="/customers/<%=@job.customer.id%>"><%=@job.customer.first_name%> <%=@job.customer.last_name%></a></p>
+        <p>Date: <%=@job.date.strftime('%D')%></p>
         <p>Make: <%=@job.make%></p>
         <p>Model: <%=@job.model%></p>
     		<p>Year: <%=@job.year%></p>
